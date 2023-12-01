@@ -43,19 +43,44 @@ public class day {
         ArrayList<String> alNum = new ArrayList<>();
         ArrayList<String> alNumNew = new ArrayList<>();
         for(String line : inputList){
-            if (line.contains(line)) {
-                
+
+            
+            
+            switch (line) {
+                case "one":
+                    line.replace("one", "1");
+                    break;
+                case "two":
+                    line.replace("two", "2");
+                    break;
+                case "three":
+                    line.replace("three", "3");
+                    break;
+                case "four":
+                    line.replace("four", "4");
+                    break;
+                case "five":
+                    line.replace("five", "5");
+                    break;
+                case "six":
+                    line.replace("six", "6");
+                    break;
+                case "seven":
+                    line.replace("seven", "7");
+                    break;
+                case "eight":
+                    line.replace("eight", "8");
+                    System.out.println("HELP");
+                    break;
+                case "nine":
+                    line.replace("nine", "9");
+                    break;
+            
+                default:
+                    break;
             }
-            line= line.replace("one", "1");
-            line=line.replace("two", "2");
-            line=line.replace("three", "3");
-            line=line.replace("four", "4");
-            line=line.replace("five", "5");
-            line=line.replace("six", "6");
-            line=line.replace("seven", "7");
-            line=line.replace("eight", "8");
-            line=line.replace("nine", "9");
-            //System.out.println(line);
+         
+            System.out.println(line);
             alNumNew.add(line);
 
         }
@@ -86,14 +111,14 @@ public class day {
                 firstDigit =  i.charAt(0);
                 lastDigit = i.charAt(i.length()-1);
                 num= ""+firstDigit+lastDigit;
-                System.out.println(num);
+                //System.out.println(num);
                 sum=sum+ Integer.parseInt(num);
             }else if (i.length()<2) {
                 i=i+i;
-                System.out.println(i);
+               // System.out.println(i);
                 sum=sum+Integer.parseInt(i);
             }else{
-                System.out.println(i);
+               // System.out.println(i);
                 sum=sum+Integer.parseInt(i);
             }
 
@@ -108,7 +133,7 @@ public class day {
     }
 
     public static void main(String[] args) {
-        String filePath = "C:/Users/malte/OneDrive/Desktop/AOC2023/aocD1.txt"; // Passe den Pfad entsprechend an
+        String filePath = "C:/Users/Siu/Desktop/aoc2023/d1.txt"; // Passe den Pfad entsprechend an
         List<String> lines = readLinesFromFile(filePath);
 
         
