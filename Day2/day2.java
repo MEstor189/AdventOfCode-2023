@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,10 @@ public class day2 {
         return arrayList;
     }
 
-    public static String enthaelt (String [] stringarray){
+    public static int enthaelt (String [] stringarray){
+
+        Collection<Integer> count;
+        int sum=1;
 
         List<String> farben = new ArrayList<String>() {
             {
@@ -49,24 +53,39 @@ public class day2 {
             }  
           };
 
-        Map<String, String> farbeValueMap = new HashMap<>();
-        farbeValueMap.put("blue", "14");
-        farbeValueMap.put("red", "12");
-        farbeValueMap.put("green", "13");
+        Map<String, Integer> farbeValueMap = new HashMap<>();
+        farbeValueMap.put("blue", 0);
+        farbeValueMap.put("red", 0);
+        farbeValueMap.put("green", 0);
 
           for (String str  : stringarray) {
             for (String farbestr : farben) {
                 if (str.contains(farbestr)) {
                     String [] test = str.split("\\s+");
+                   // System.out.println(test[1]);
+                   // System.out.println(farbeValueMap.get(farbestr));
+                    
+                    if(Integer.parseInt(test[1])>farbeValueMap.get(farbestr)){ 
+                        //System.out.println(farbeValueMap.toString());
+                        //System.out.println("K");
+                        //System.out.println(str);
+                        farbeValueMap.replace(farbestr, farbeValueMap.get(farbestr), Integer.parseInt(test[1]));
+                        System.out.println(farbeValueMap.toString());
+                    }
+                    
                     //System.out.println(test[1]);
-                    if(Integer.parseInt(test[1])>Integer.parseInt(farbeValueMap.get(farbestr))){
+                   /*if(Integer.parseInt(test[1])>Integer.parseInt(farbeValueMap.get(farbestr))){
                         //System.out.println(stringarray[0]);
                         return null;  
-                    }                 
+                    }*/                 
                 }
             }
           }
-        return stringarray[0];
+        count= farbeValueMap.values();
+        for (Integer num : count) {
+            sum=sum*num;
+        }
+        return sum;
     }
     //12 red cubes, 13 green cubes, and 14 blue cubes
     
@@ -80,15 +99,9 @@ public class day2 {
         ArrayList<String[]> arrayList = intoArrayList(list);
 
         for (String [] array : arrayList) {
-            String game = enthaelt(array);
+            int count = enthaelt(array);
             //System.out.println(game);
-            if(game!=null){
-
-            
-            String [] k = game.split("\\s+");
-            System.out.println(k[1]);
-            sum = sum + Integer.parseInt(k[1]);
-            }
+            sum=sum+count;
         }
         System.out.println(sum);
         
