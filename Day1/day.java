@@ -49,7 +49,7 @@ public class day {
 
         }
         
-        Pattern p = Pattern.compile("[+-]?[0-9]+");
+      /*  Pattern p = Pattern.compile("[+-]?[0-9]+");
         String s = "";
         for (String line : alNumNew) {
             Matcher m = p.matcher(line);
@@ -60,16 +60,19 @@ public class day {
             alNum.add(s);
             s = "";
         }
-
-        // System.out.println(alNum);
-        return alNum;
+*/
+        System.out.println(alNumNew);
+        System.out.println(alNumNew.size());
+        return alNumNew;
     }
 
 
     public static Integer sumAll(ArrayList<String> numArrayList) {
+        int counter=0;
         char firstDigit;
         char lastDigit;
         String num;
+        String zahlen="";
         int sum = 0;
         for (String i : numArrayList) {
             // System.out.println(i);
@@ -77,19 +80,27 @@ public class day {
                 firstDigit = i.charAt(0);
                 lastDigit = i.charAt(i.length() - 1);
                 num = "" + firstDigit + lastDigit;
-                 System.out.println(num);
+                zahlen= zahlen +"+"+num;
+                System.out.println(num);
+                counter++;
                 sum = sum + Integer.parseInt(num);
             } else if (i.length() < 2) {
                 i = i + i;
+                zahlen= zahlen +"+"+i;
                  System.out.println(i);
+                 counter++;
                 sum = sum + Integer.parseInt(i);
-            } else {
+            } else if(i.length()==2) {
+                zahlen= zahlen +"+"+Integer.parseInt(i);
                  System.out.println(i);
+                 counter++;
                 sum = sum + Integer.parseInt(i);
+                
             }
 
         }
-
+        System.out.println(counter);
+        //System.out.println(zahlen);
         return sum;
     }
 
@@ -105,7 +116,7 @@ public class day {
         List<String> lines = readLinesFromFile(filePath);
         // System.out.println("l");
         //filterNum(lines);
-        //System.out.println(convertStringToNumber("6seventntzffjkkvvhtgtwoonethreefivekzvptvxfjg"));
+        //System.out.println(convertStringToNumber("n6two1brpjhf"));
         System.out.println(sumAll(filterNum(lines)));
 
 
@@ -124,6 +135,7 @@ public class day {
               add("eight");
               add("nine");
             }
+            
           };
         Map<String, String> wordToNumberMap = new HashMap<>();
         wordToNumberMap.put("one", "1");
@@ -167,7 +179,7 @@ public class day {
                 }
                 */
             } else if (Character.isDigit(c)) {
-                currentNumber.append(c);
+                result.append(c);
             }
         }
 
