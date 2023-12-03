@@ -57,7 +57,7 @@ public class day3 {
                         stern(x, y, Integer.parseInt(num));
 
                         sum= sum + Integer.parseInt(num);
-                        System.out.println(num);
+                        //System.out.println(num);
                     };
                     num = "";
                     valid=false;
@@ -135,7 +135,7 @@ public class day3 {
                     valid = true;
                     x=(j+1);
                     y=(i+1);
-                    System.out.println(x+":"+y);
+                    //System.out.println(x+":"+y);
                 }
             }
             //untenlinks
@@ -170,30 +170,30 @@ public class day3 {
     }
 
     public static void anzeigen() {
+        int sum=0;
         // Anzeigen der gespeicherten Daten
         for (Map.Entry<String, List<Integer>> eintrag : datenbank.entrySet()) {
-            String kombination = eintrag.getKey();
             List<Integer> zahlenListe = eintrag.getValue();
-
-            System.out.print(kombination + ": ");
-
-            // Alle Zahlen für die Kombination ausgeben
-            for (Integer zahl : zahlenListe) {
-                System.out.print(zahl + " ");
+            if (zahlenListe.size() == 2) {
+                // Schlüssel hat genau zwei Zahlen, also ausgeben
+                String kombination = eintrag.getKey();
+                sum = sum + (zahlenListe.get(0)*zahlenListe.get(1));
+                //System.out.println(kombination + ": " + zahlenListe.get(0) + " " + zahlenListe.get(1));
             }
-
-            System.out.println();
+            System.out.println(eintrag.getKey() +": " + zahlenListe);
         }
+        
     }
 
 
 
     public static void main(String[] args) {
      
-        String filePath = "C:/Users/Siu/Desktop/aoc2023/d3test.txt"; // Passe den Pfad entsprechend an
+        String filePath = "C:/Users/Siu/Desktop/aoc2023/d3.txt"; // Passe den Pfad entsprechend an
         ArrayList<char[]> lines = readLines(filePath);
-        System.out.println(vailid(lines));
+        vailid(lines);
         anzeigen();
+        
 
         // Print the content of the ArrayList
      
