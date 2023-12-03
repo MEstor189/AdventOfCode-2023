@@ -106,8 +106,7 @@ public class day2 {
         System.out.println(sum);
         
 
-        
-        
+    
         
     }
 }
