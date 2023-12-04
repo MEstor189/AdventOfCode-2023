@@ -44,7 +44,9 @@ public class day3 {
                 char c = line[j];
                 if(Character.isDigit(c)){
                     
+                    if(!valid){
                     valid=adjacent(lines, i, j, valid);
+                    }
                     num= num + c;
                
                    
@@ -182,6 +184,7 @@ public class day3 {
             }
             System.out.println(eintrag.getKey() +": " + zahlenListe);
         }
+        System.out.println(sum);
         
     }
 
@@ -189,7 +192,7 @@ public class day3 {
 
     public static void main(String[] args) {
      
-        String filePath = "C:/Users/Siu/Desktop/aoc2023/d3.txt"; // Passe den Pfad entsprechend an
+        String filePath = "C:/Users/malte/OneDrive/Desktop/AOC2023/d3.txt"; // Passe den Pfad entsprechend an
         ArrayList<char[]> lines = readLines(filePath);
         vailid(lines);
         anzeigen();
