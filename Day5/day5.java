@@ -19,34 +19,21 @@ public class day5 {
         long min = 0;
         long nearseed=9000000000L;
 
-        List<List<Long>> seedToLocationMap = readDataFromFile("C:/Users/malte/OneDrive/Desktop/AOC2023/d5.txt");
+        List<List<Long>> seedToLocationMap = readDataFromFile("C:/Users/malte/OneDrive/Desktop/AOC2023/d5test.txt");
 
         // Ausgabe der eingelesenen Daten
         List<Long> seedList = seedToLocationMap.get(0);
         List<List<Long>> blocklist = new ArrayList<>();
- 
+        seedToLocationMap.remove(0);
+        seedToLocationMap.remove(0);
                 
         for (Long seed : seedList) {
-            /* 
-            for (List<Long> klist : seedToLocationMap) {
-                for (Long  p  : klist) {
-                    System.out.print(p+ " ");
-                }
-                System.out.println();
-            }
-            */
-        //seedToLocationMap.remove(0);
-        //seedToLocationMap.remove(0);
 
 
             for (List<Long> dataList : seedToLocationMap) {
-
                 if (!dataList.isEmpty()) {
                     blocklist.add(dataList);
-                   /*  for (Long o : dataList) {
-                       System.out.println(o); 
-                    }
-                    */
+
                     Long tempmax = dataList.get(1) + dataList.get(2);
                     //System.out.println(tempmax);
                     Long tempmin = dataList.get(1);
@@ -58,7 +45,7 @@ public class day5 {
                         min = tempmin;
                     }
 
-                    // System.out.println(dataList.get(0));
+                    //System.out.println(dataList.get(0));
                     for (Long data : dataList) {
                         System.out.print(data + " ");
 
@@ -134,7 +121,7 @@ public class day5 {
 
                 if (!line.isEmpty()) {
                     String[] tokens = line.split(" ");
-                    System.out.println(line);
+                   // System.out.println(line);
 
                     // Konvertiere nur die Token, die Zahlen repräsentieren
                     List<Long> dataBlock = new ArrayList<>();
