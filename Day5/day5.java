@@ -3,10 +3,13 @@ package Day5;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,93 +18,98 @@ import java.util.Scanner;
 public class day5 {
 
     public static void main(String[] args) {
-        long max = 0;
-        long min = 0;
-        long nearseed=9000000000L;
 
-        List<List<Long>> seedToLocationMap = readDataFromFile("C:/Users/malte/OneDrive/Desktop/AOC2023/d5test.txt");
+        List<List<Long>> seedToLocationMap = readDataFromFile("C:/Users/Siu/Desktop/aoc2023/d5test.txt");
 
         // Ausgabe der eingelesenen Daten
         List<Long> seedList = seedToLocationMap.get(0);
-        List<List<Long>> blocklist = new ArrayList<>();
+
+        long min = 900000000000000000L;
         seedToLocationMap.remove(0);
         seedToLocationMap.remove(0);
-                
-        for (Long seed : seedList) {
+        boolean blockdone = false;
+        boolean done = true;
+        int counter = 0;
+        ArrayList<Long[]> seedPairs = createNewSeeds(seedList);
 
+        for (Long[] seedPair : seedPairs) {
 
-            for (List<Long> dataList : seedToLocationMap) {
-                if (!dataList.isEmpty()) {
-                    blocklist.add(dataList);
-
-                    Long tempmax = dataList.get(1) + dataList.get(2);
-                    //System.out.println(tempmax);
-                    Long tempmin = dataList.get(1);
-                    if (tempmax > max) {
-                        max = tempmax;
-                    }
-
-                    if (tempmin < min) {
-                        min = tempmin;
-                    }
-
-                    //System.out.println(dataList.get(0));
-                    for (Long data : dataList) {
-                        System.out.print(data + " ");
-
-                    }
-                    System.out.println();
-                } else {
-                    System.out.println();
-                    if(min<=seed&&max>=seed){
-
+            for (int i = 0; i < seedPair[1]; i++) {
+                if (done) {
+                    long seed = getLocation(blockdone, seedPair[0] + ((long) i), seedToLocationMap, counter);
+                    counter++;
+                    blockdone = false;
+                    if (seed < min) {
+                        min = seed;
                         
-                        //System.out.println(min);
-                        //System.out.println(max);
-                        seed= berechnen(seed, blocklist);
-
-
                     }else{
-                        blocklist= new ArrayList<>();
+                        done = true;
                     }
-
-                    max = 0;
-                    min = 9000000000L;
                 }
-
-                // System.out.println(min);
-
+                
             }
+            done=true;
 
-            if(nearseed>(seed)){
-                nearseed=seed;
-
-            }
-
-            System.out.println("-----------------------------");
         }
-        System.out.println("Ende: "+ nearseed);
+
+        // sortiert
+        // Arrays.sort(erglist);
+        System.out.println("test: " + min);
 
     }
 
-    public static Long berechnen (long seed, List<List<Long>> blocklist){
-        Map<Long, Long> datenbank = new HashMap<>();
-
-        for (List<Long> list : blocklist) {
-            
-            for (long num : list) {
-                
-                for(long k =0; k<=list.get(2);k++){
-                    long key = list.get(1) + k;
-                    long value = list.get(0)+k;
-                    datenbank.put(key, value);
-                }
-            }
+    public static ArrayList<Long[]> createNewSeeds(List<Long> oldSeedList) {
+        ArrayList<Long[]> seedpairs = new ArrayList<>();
+        List<Long> newSeeds = new ArrayList<>();
+        for (int i = 0; i < oldSeedList.size(); i += 2) {
+            long num1 = oldSeedList.get(i);
+            long num2 = oldSeedList.get(i + 1);
+            Long[] pair = { num1, num2 };
+            seedpairs.add(pair);
         }
-        System.out.println(datenbank.toString());
-        long test = datenbank.get(seed);
-        System.out.println("new: "+test);
-        return test;
+
+        return seedpairs;
+
+    }
+
+
+    //map reversen target &dest tauschen
+
+    public static long getLocation(boolean blockdone, long seed, List<List<Long>> seedToLocationMap, long counter) {
+
+        int b = 0;
+        long org = seed;
+        for (List<Long> list : seedToLocationMap) {
+
+            if (!list.isEmpty()) {
+                if (!blockdone) {
+                    if (seed >= list.get(1) && seed <= (list.get(1) + list.get(2))) {
+                        long diff = seed - list.get(1);
+                        // System.out.println(list.get(1));
+                        seed = list.get(0) + seed - list.get(1);
+                        // System.out.println("diff: "+diff);
+                        // System.out.println("newseed: " + seed + "Line: " + b);
+                        blockdone = true;
+
+                    } else {
+                        seed = seed;
+                        // System.out.println("NewOldSeed: " + seed + "line: " + b);
+                    }
+                }
+                b++;
+            } else {
+                System.out.println();
+                blockdone = false;
+                //System.out.println("ergebnisSeed: " + seed);
+                //System.out.println("-----------");
+                //System.out.println("Counter: " + counter);
+
+            }
+
+        }
+        System.out.println("Org: "+ org+" Erg: "+seed+ " Count: "+counter);
+        System.out.println("|||||||||||||||||||||||||||||||");
+        return seed;
 
     }
 
@@ -121,7 +129,7 @@ public class day5 {
 
                 if (!line.isEmpty()) {
                     String[] tokens = line.split(" ");
-                   // System.out.println(line);
+                    // System.out.println(line);
 
                     // Konvertiere nur die Token, die Zahlen repräsentieren
                     List<Long> dataBlock = new ArrayList<>();
@@ -133,7 +141,7 @@ public class day5 {
                             // Ignoriere Token, die nicht in Zahlen umgewandelt werden können
                         }
                     }
-                   
+
                     // Füge den Datenblock zur Liste hinzu
                     dataList.add(dataBlock);
                 }
@@ -153,3 +161,25 @@ public class day5 {
         return dataList;
     }
 }
+/*
+ * 484147517
+ * 554268963
+ * 1280617623
+ * 1296352523
+ * 1482622008
+ * 1565670012
+ * 1791402810
+ * 1952856968
+ * 2429103736
+ * 2585289519
+ * 2857206770
+ * 2945862860
+ * 3267018527
+ * 3516186593
+ * 3549811819
+ * 3552409866
+ * 3562009725
+ * 3705188833
+ * 3974356190
+ * 4075212935
+ */
