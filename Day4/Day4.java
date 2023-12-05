@@ -60,26 +60,13 @@ public class Day4 {
     public static int[][] calcScratches(int[][] dArray, int size) {
 
         for (int i = 0; i < size; i++) {
-            for (int l =0; l<size;l++){
-           // System.out.println("JKAHD"+dArray[0][l]+"|"+dArray[1][l]);
-            }
+            for (int l =0; l<size;l++){            }
             int winstemp = dArray[0][i];
-           // int counttemp = dArray[1][i];
-           // System.out.println("wins: "+ winstemp+"| count: "+ counttemp );
-            //System.out.println("KK       "+ dArray[0][4] + "|"+ dArray[1][4]);
             for (int j = 0; j < winstemp; j++) {
                 
                 int counttemp = dArray[1][i];
-                //System.out.println("COunter: " + counttemp);
-                if (i + winstemp <= size) {
-                    
-                   // System.out.println("K" + dArray[0][i]);
-                }
                 dArray[1][i+j + 1] = dArray[1][i+j+1] + counttemp;
-                //System.out.println("HÄÄÄÄÄ" + counttemp +"|"+ counttemp);
-            }
-            
-
+            }            
         }
         return dArray;
     }
@@ -95,20 +82,18 @@ public class Day4 {
             winsCount[0][i] = aufteilen(string);
             winsCount[1][i] = 1;
         }
-        for (int j = 0; j < lines.size(); j++) {
+      /*for (int j = 0; j < lines.size(); j++) {
             System.out.println(winsCount[0][j] + "|" + winsCount[1][j]);
         }
-
-        int[][] test = calcScratches(winsCount, lines.size());
-        System.out.println("IIIIIIIIIIIIIIIIIIIII");
+        */
+        int[][] arrayScratches = calcScratches(winsCount, lines.size());
 
         for (int j = 0; j < lines.size(); j++) {
-            int num = test[1][j];
+            int num = arrayScratches[1][j];
             scratchAll= scratchAll+num;
         }
         System.out.println(scratchAll);
-        /*              
-        */
+        
     }
 
 }
