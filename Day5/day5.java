@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,42 +20,34 @@ public class day5 {
 
     public static void main(String[] args) {
 
-        List<List<Long>> seedToLocationMap = readDataFromFile("C:/Users/Siu/Desktop/aoc2023/d5test.txt");
-
-        // Ausgabe der eingelesenen Daten
+        List<List<Long>> seedToLocationMap = readDataFromFile("C:/Users/Siu/Desktop/aoc2023/d5.txt");
         List<Long> seedList = seedToLocationMap.get(0);
-
         long min = 900000000000000000L;
         seedToLocationMap.remove(0);
         seedToLocationMap.remove(0);
-        boolean blockdone = false;
-        boolean done = true;
-        int counter = 0;
-        ArrayList<Long[]> seedPairs = createNewSeeds(seedList);
 
-        for (Long[] seedPair : seedPairs) {
-
-            for (int i = 0; i < seedPair[1]; i++) {
-                if (done) {
-                    long seed = getLocation(blockdone, seedPair[0] + ((long) i), seedToLocationMap, counter);
-                    counter++;
-                    blockdone = false;
-                    if (seed < min) {
-                        min = seed;
-                        
-                    }else{
-                        done = true;
-                    }
-                }
-                
-            }
-            done=true;
-
+        Collections.reverse(seedToLocationMap);
+        for (List <Long> innerList  : seedToLocationMap) {
+           // Collections.reverse(innerList);
         }
 
-        // sortiert
-        // Arrays.sort(erglist);
-        System.out.println("test: " + min);
+        boolean blockdone = false;
+
+        ArrayList<Long[]> seedPairs = createNewSeeds(seedList);
+
+        
+
+            for (long i = 26879537 ; i <= 1000000000 ; i++) {
+                    long seed = getLocation(blockdone, i, seedToLocationMap);            
+                    blockdone = false;
+
+                    if(isseed(seed, seedPairs)){
+                        System.out.println(i+" | "+seed);
+                        break;
+                    }
+            }
+
+        
 
     }
 
@@ -71,11 +64,21 @@ public class day5 {
         return seedpairs;
 
     }
+    public static boolean isseed(long seed, ArrayList<Long[]> seedpairs){
+        boolean d = false;
+        for (Long [] seedpair : seedpairs) {
+
+             if(seed>= seedpair[0]&&seed<=seedpair[0]+seedpair[1]){      
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     //map reversen target &dest tauschen
 
-    public static long getLocation(boolean blockdone, long seed, List<List<Long>> seedToLocationMap, long counter) {
+    public static long getLocation(boolean blockdone, long seed, List<List<Long>> seedToLocationMap) {
 
         int b = 0;
         long org = seed;
@@ -83,10 +86,10 @@ public class day5 {
 
             if (!list.isEmpty()) {
                 if (!blockdone) {
-                    if (seed >= list.get(1) && seed <= (list.get(1) + list.get(2))) {
+                    if (seed >= list.get(0) && seed <= (list.get(0) + list.get(2))) {
                         long diff = seed - list.get(1);
                         // System.out.println(list.get(1));
-                        seed = list.get(0) + seed - list.get(1);
+                        seed = list.get(1) + seed - list.get(0);
                         // System.out.println("diff: "+diff);
                         // System.out.println("newseed: " + seed + "Line: " + b);
                         blockdone = true;
@@ -98,7 +101,7 @@ public class day5 {
                 }
                 b++;
             } else {
-                System.out.println();
+                //System.out.println();
                 blockdone = false;
                 //System.out.println("ergebnisSeed: " + seed);
                 //System.out.println("-----------");
@@ -107,8 +110,8 @@ public class day5 {
             }
 
         }
-        System.out.println("Org: "+ org+" Erg: "+seed+ " Count: "+counter);
-        System.out.println("|||||||||||||||||||||||||||||||");
+        //System.out.println("Org: "+ org+" Erg: "+seed);
+        //System.out.println("|||||||||||||||||||||||||||||||");
         return seed;
 
     }
