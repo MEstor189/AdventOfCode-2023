@@ -41,12 +41,12 @@ public class day9 {
 
                 if ((k - 1) >= 0) {
                     List<Integer> blist = output.get(k - 1);
-                    g = list.get(list.size() - 1);
-                    u = blist.get(blist.size() - 1);
-                    h = u + g;
+                    g = list.get(0);
+                    u = blist.get(0);
+                    h = u-g;
 
                     System.out.println("G: " + h);
-                    blist.add(h);
+                    blist.add(0, h);
 
                 }
 
@@ -57,9 +57,9 @@ public class day9 {
             }
             System.out.println();
             System.out.println("____________________");
-            int e = series.get(series.size() - 1) + h;
-            System.out.println("HJ: " + series.get(series.size() - 1));
-            series.add(series.get(series.size() - 1) + h);
+            int e = series.get(0) - h;
+            System.out.println("HJ: " + series.get(0));
+            series.add(0, series.get(0) + h);
             System.out.println("S: " + e);
             sum=sum+e;
             series = new ArrayList<>();
